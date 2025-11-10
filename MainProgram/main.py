@@ -7,9 +7,9 @@ def main() :
 
 def Iniciar ():
     
-    print("-------------------------------")
-    print("|         Bem-Vindo           |")
-    print("-------------------------------")
+    result = False
+
+    cf.Header(0)
     print("[1] Logar")
     print("[2] Cadastrar")
     print("[3] Sair")
@@ -17,9 +17,13 @@ def Iniciar ():
     opt = input()
 
     if (opt == "1"):
-        re.Logar()
+        result = re.Logar()
+        if(result == False):
+            Iniciar()
     elif (opt == "2"):
-        re.Cadastrar()
+        result = re.Cadastrar()
+        if(result ==  False):
+            Iniciar()
     elif (opt == "3"):
         cf.Sair()
     else:

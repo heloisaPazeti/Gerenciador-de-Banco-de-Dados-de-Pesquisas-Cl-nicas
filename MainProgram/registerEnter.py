@@ -1,11 +1,15 @@
 import commonFunctions as cf
+import time
+
+
+# APENAS PARA TESTE
 import testCredentials as tc
 
 def Cadastrar():
     
-    print("-------------------------------")
-    print("|          Cadastro           |")
-    print("-------------------------------")
+    result = True
+
+    cf.Header(2)
 
     cpf = input("CPF: ")
     name = input("Nome: ")
@@ -31,11 +35,31 @@ def Cadastrar():
 
     #if(deu certo):
         # print("Cadastro realizado - logando...")
-        # Logar()
+        # result = Logar()
     #else:
         # opt = input("Parece que algo deu errado... Tentar novamente? [s/n]: ")
-        # if (opt == "s"): Cadastrar()
+        # if (opt == "s"): 
+            # result = Cadastrar()
         # else: cf.Sair()
 
+
+    result = Logar()
+    return result
+
 def Logar():
-    print("Logando...")
+
+    cf.Header(1)
+    
+    cpf = input("CPF: ")
+    senha = input("Senha: ")
+
+    # TESTE SEM BD
+    if (cpf == tc.CPF() and senha == tc.Senha()):
+        print("Credenciais aceitas!")
+        time.sleep(1.5)
+        return True
+        #Menu()
+    else:
+        print("Parece que algo não está certo, tente novamente...")
+        time.sleep(1.5)
+        return False
