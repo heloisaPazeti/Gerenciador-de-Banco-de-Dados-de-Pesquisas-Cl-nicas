@@ -1,4 +1,6 @@
 import commonFunctions as cf
+import time
+import menu
 
 # APENAS PARA TESTE
 import testCredentials as tc
@@ -54,9 +56,9 @@ def Logar():
     # TESTE SEM BD
     if (cpf == tc.CPF() and senha == tc.Senha()):
         print("Credenciais aceitas!")
-        time.sleep(1.5)
-        return True
-        #Menu()
+        time.sleep(1)
+        result = menu.Menu()
+        return result
     else:
         print("Parece que algo não está certo, tente novamente...")
         time.sleep(1.5)
