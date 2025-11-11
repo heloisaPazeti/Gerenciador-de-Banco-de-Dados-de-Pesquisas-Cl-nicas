@@ -30,5 +30,7 @@ def Header(header):
         print("|      Minhas Pesquisas       |")
     elif(header == 5):
         print("|           Buscar            |")
+    elif(header == 6):
+        print("|   Adicionar Nova Pesquisa   |")
 
     print("-------------------------------")

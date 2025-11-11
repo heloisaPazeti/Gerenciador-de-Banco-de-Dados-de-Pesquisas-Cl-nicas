@@ -1,5 +1,6 @@
 from MainProgram.src.functions import commonFunctions as cf
 from MainProgram.src.screens import menu
+from MainProgram.src.screens import showResearch as sr
 
 def Buscar():
 
@@ -28,3 +29,9 @@ def Buscar():
         # Depois fazer a busca
         # Levar resultados, provavelmente mais de um, para uma outra tela de seleção
         # Deixar lá para selecionar o detalhe de uma pesquisa, isso já tem feito dentro do objeto Pesquisa
+
+        #result = sr.ListarPesquisas(listaPesquisas)
+        #if(result):
+            #Buscar()
+
+    return True

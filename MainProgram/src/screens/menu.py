@@ -2,6 +2,7 @@ from MainProgram.src.functions import commonFunctions as cf
 
 from MainProgram.src.menuOptions import researches as res
 from MainProgram.src.menuOptions import search as sea
+from MainProgram.src.menuOptions import addResearch as add
 from MainProgram.src.menuOptions import exams as ex
 
 import time
@@ -14,19 +15,19 @@ def Menu():
 
     print("[1] Minhas Pesquisas")
     print("[2] Buscar")
-    print("[3] Amostras / Exames")
-    print("[4] Adicionar Pesquisa")
+    print("[3] Adicionar Pesquisa")
+    print("[4] Amostras / Exames")
     print("[5] Deslogar")
     print("[6] Sair")
 
-    opt = input("\n Selecione uma opção: ")
+    opt = input("\nSelecione uma opção: ")
 
     if(opt == "1"):
-       result = res.MinhasPesquisas()
+        result = res.MinhasPesquisas()
     elif(opt == "2"):
-        print("1")
+        result = sea.Buscar()
     elif(opt == "3"):
-        print("1")
+        result = add.AdicionarPesquisa()
     elif(opt == "4"):
         print("4")
     elif(opt == "5"):
