@@ -22,3 +22,6 @@ class Pesquisa:
         print(f"Pesquisador Responsavel: {self.pesqResponsa}")
         print(f"Pesquisador(es): {self.pesqs}")
         print(f"Descricao: {self.descricao}")
+        
+        input("\n Pressione qualquer tecla para voltar...")
+        return True 

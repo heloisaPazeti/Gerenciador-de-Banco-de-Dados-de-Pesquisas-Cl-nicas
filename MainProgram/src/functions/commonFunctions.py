@@ -28,4 +28,7 @@ def Header(header):
         print("|            Menu             |")
     elif(header == 4):
         print("|      Minhas Pesquisas       |")
+    elif(header == 5):
+        print("|           Buscar            |")
+
     print("-------------------------------")

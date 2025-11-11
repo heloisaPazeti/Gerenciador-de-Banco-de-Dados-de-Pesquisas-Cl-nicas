@@ -1,7 +1,9 @@
 from MainProgram.src.functions import commonFunctions as cf
 from MainProgram.src.functions import testCredentials as tc
-from MainProgram.src.screens import showResearch as sr
 
+from MainProgram.src.screens import menu
+
+import time
 
 def MinhasPesquisas():
     
@@ -25,7 +27,26 @@ def MinhasPesquisas():
     print("[0] Voltar")
     print("-------------------------------")
 
-    result = sr.ListarPesquisas(listaPesquisas)
+    for i in range(len(listaPesquisas)):
+        print(f"[{i+1}] - {listaPesquisas[i].titulo}")
 
-    if(result):
+    opt = input("\n Selecione para ver detalhes: ")
+    if(opt == "0"):
+        menu.Menu()
+    
+    index = int(opt)-1
+    if(index in range(len(listaPesquisas))):
+        result = MostrarPesquisa(listaPesquisas[index])
+        if(result): 
+            MinhasPesquisas()
+    else:
+        print("Parece que isso não é uma opção... Tente novamente...")
+        time.sleep(1.5)
         MinhasPesquisas()
+
+def MostrarPesquisa(pesquisa):
+
+    pesquisa.MostrarPesquisa()
+
+    input("\n Pressione qualquer tecla para voltar...")
+    return True 
