@@ -1,43 +1,37 @@
-from MainProgram.src.functions import commonFunctions as cf  
-
-from MainProgram.src.menuOptions import researches as res
-from MainProgram.src.menuOptions import search as sea
-from MainProgram.src.menuOptions import addResearch as add
-from MainProgram.src.menuOptions import exams as ex
-
+from MainProgram.src.controllers import screenController as sc
 import time
-import sys
+
 def Menu():
 
     result = True
 
-    cf.Header(3)
+    sc.Header(3)
 
     print("[1] Minhas Pesquisas")
     print("[2] Buscar")
     print("[3] Adicionar Pesquisa")
-    print("[4] Amostras / Exames")
-    print("[5] Deslogar")
-    print("[6] Sair")
+    print("[4] Alterar Pesquisa")
+    print("[5] Deletar Pesquisa")
+    print("[6] Deslogar")
+    print("[7] Sair")
 
     opt = input("\nSelecione uma opção: ")
 
     if(opt == "1"):
-        result = res.MinhasPesquisas()
+        sc.MinhasPesquisas()
     elif(opt == "2"):
-        result = sea.Buscar()
+        sc.Buscar()
     elif(opt == "3"):
-        result = add.AdicionarPesquisa()
+        sc.AdicionarPesquisa()
     elif(opt == "4"):
         print("4")
     elif(opt == "5"):
-        return False
+        print("5")
     elif(opt == "6"):
-        cf.Sair()
+        sc.Iniciar()
+    elif(opt == "7"):
+        sc.Sair()
     else: 
         print("Comando inexistente...")
         time.sleep(1)
-        
-
-    if(result):
-        Menu()
+        sc.Menu()

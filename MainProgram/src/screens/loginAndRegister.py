@@ -1,6 +1,4 @@
-from MainProgram.src.functions import commonFunctions as cf
-from MainProgram.src.screens import menu
-import time
+from MainProgram.src.controllers import screenController as sc
 
 # APENAS PARA TESTE
 from MainProgram.src.functions import testCredentials as tc
@@ -8,8 +6,7 @@ from MainProgram.src.functions import testCredentials as tc
 def Cadastrar():
     
     result = True
-
-    cf.Header(2)
+    sc.Header(2)
 
     cpf = input("CPF: ")
     name = input("Nome: ")
@@ -31,35 +28,33 @@ def Cadastrar():
         print("Parece que algo não deu certo...")
         senha2 = input("Insira a senha novamente: ")
 
-    # FAZER PARADA NO BANCO E VER SE DEU CERTO
-
-    #if(deu certo):
-        # print("Cadastro realizado - logando...")
-        # result = Logar()
-    #else:
-        # opt = input("Parece que algo deu errado... Tentar novamente? [s/n]: ")
-        # if (opt == "s"): 
-            # result = Cadastrar()
-        # else: cf.Sair()
-
-
-    result = Logar()
-    return result
+    
+    # result = query de inserção
+    if(result):
+        print("Cadastro realizado - logando...")
+        sc.Esperar(1)
+        sc.Logar()
+    else:
+        opt = input("Parece que algo deu errado... Tentar novamente? [s/n]: ")
+        if (opt == "s"): 
+            sc.Cadastrar()
+        else: 
+            sc.Sair()
 
 def Logar():
 
-    cf.Header(1)
+    sc.Header(1)
     
     cpf = input("CPF: ")
     senha = input("Senha: ")
 
-    # TESTE SEM BD
-    if (cpf == tc.CPF() and senha == tc.Senha()):
+    # senhaBanco = query(WHERE CPF == cpf)
+
+    if (senha == tc.Senha()):
         print("Credenciais aceitas!")
-        time.sleep(1)
-        result = menu.Menu()
-        return result
+        sc.Esperar(0.5)
+        sc.Menu()
     else:
         print("Parece que algo não está certo, tente novamente...")
-        time.sleep(1.5)
-        return False
+        sc.Esperar(1.5)
+        sc.Iniciar()

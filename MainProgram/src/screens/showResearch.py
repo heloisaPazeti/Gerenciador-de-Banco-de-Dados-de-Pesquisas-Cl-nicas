@@ -1,5 +1,4 @@
-from MainProgram.src.screens import menu
-import time
+from MainProgram.src.controllers import screenController as sc
 
 def ListarPesquisas(listaPesquisas):
     
@@ -8,7 +7,8 @@ def ListarPesquisas(listaPesquisas):
 
     opt = input("\n Selecione para ver detalhes: ")
     if(opt == "0"):
-        menu.Menu()
+        sc.Menu()
+        return True
     
     index = int(opt)-1
     if(index in range(len(listaPesquisas))):
@@ -17,5 +17,5 @@ def ListarPesquisas(listaPesquisas):
             return True
     else:
         print("Parece que isso não é uma opção... Tente novamente...")
-        time.sleep(1.5)
-        return True
+        sc.Esperar(1.5)
+        return False

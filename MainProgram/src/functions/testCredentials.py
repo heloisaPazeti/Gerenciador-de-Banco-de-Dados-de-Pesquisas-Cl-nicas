@@ -1,8 +1,5 @@
 from MainProgram.objects import research as r
 
-def CPF():
-    return "123"
-
 def Senha():
     return "123"
 

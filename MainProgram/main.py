@@ -1,33 +1,8 @@
-from MainProgram.src.functions import commonFunctions as cf
-from MainProgram.src.functions import registerEnter as re
+from MainProgram.src.controllers import screenController as sc
 
 def main() :
 
-    Iniciar()
-
-def Iniciar ():
-    
-    result = False
-
-    cf.Header(0)
-    print("[1] Logar")
-    print("[2] Cadastrar")
-    print("[3] Sair")
-
-    opt = input()
-
-    if (opt == "1"):
-        result = re.Logar()
-        if(result == False):
-            Iniciar()
-    elif (opt == "2"):
-        result = re.Cadastrar()
-        if(result ==  False):
-            Iniciar()
-    elif (opt == "3"):
-        cf.Sair()
-    else:
-        print("Comando não encontrado... Tente novamente.")
-        Iniciar()
+    sc.Iniciar()
 
 main()
+

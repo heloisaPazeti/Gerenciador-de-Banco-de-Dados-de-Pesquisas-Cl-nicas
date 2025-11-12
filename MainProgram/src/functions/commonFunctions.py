@@ -1,16 +1,12 @@
-import sys
 import os
 import time
 
-def Sair() :
-    print("saindo....")
-    sys.exit()
-
 def LimparTela():
     
-    # clear = lambda: os.system('cls') # windows 
-    clear = lambda: os.system('clear') # linux
-    clear()
+    if(os.name == 'nt'):
+        os.system('cls') # windows 
+    else:
+        os.system('clear') # linux/mac
 
 def Header(header):
 
