@@ -28,13 +28,25 @@ def Cadastrar():
         print("Parece que algo não deu certo...")
         senha2 = input("Insira a senha novamente: ")
 
-    
+    #TODO#
+    #id=random number???
+
     # result = query de inserção
+    # result = 'INSERT INTO PESSOA(ID, CPF, NOME, UF,CIDADE,BAIRRO,RUA,NUMERO,TELEFONE1,TELEFONE2,DATA_NASC,SENHA) VALUES (id, cpf, nome, uf,cidade,bairro,rua,numero,telefone1,telefone2,data_nasc,senha);'
+
+    #if(coren!=None):
+    #    result = 'INSERT INTO ENFERMEIRO(id,COREN) VALUES(id,coren);'
+
+    #if(crm!=None):
+    #    result = 'INSERT INTO MEDICO(ID,CRM) VALUES(id,crm);'
+
     if(result):
+        #result = 'COMMIT;'
         print("Cadastro realizado - logando...")
         sc.Esperar(1)
         sc.Logar()
     else:
+        #result = 'ROLLBACK;'
         opt = input("Parece que algo deu errado... Tentar novamente? [s/n]: ")
         if (opt == "s"): 
             sc.Cadastrar()
@@ -49,6 +61,7 @@ def Logar():
     senha = input("Senha: ")
 
     # senhaBanco = query(WHERE CPF == cpf)
+    # senhaBanco = SELECT PESSOA.SENHA FROM PESSOA WHERE PESSOA.CPF='1234567890';
 
     if (senha == tc.Senha()):
         print("Credenciais aceitas!")
