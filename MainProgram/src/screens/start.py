@@ -1,5 +1,12 @@
 from MainProgram.src.controllers import screenController as sc
 
+
+# import oracledb
+# Estabelecer a conexão
+#connection = oracledb.connect(user=user, password=password, dsn=dsn)
+#cursor = connection.cursor()
+
+
 def Iniciar ():
     
     result = False

@@ -1,3 +1,4 @@
+
 from MainProgram.src.controllers import screenController as sc
 
 # APENAS PARA TESTE
@@ -33,92 +34,116 @@ def Cadastrar():
         print("Parece que algo não deu certo...")
         senha2 = input("Insira a senha novamente: ")
 
+    sql_query = None
 
-    if(coren==None and crm==None):
-    # result = query de inserção
-        '''DECLARE
-            person_id NUMBER;
-        BEGIN
-            INSERT INTO PESSOA(CPF, NOME, UF,CIDADE,BAIRRO,RUA,NUMERO,TELEFONE1,TELEFONE2,DATA_NASC,SENHA)
-            VALUES (cpf, nome, uf,cidade,bairro,rua,numero,telefone1,telefone2,data_nasc,senha)
-            RETURNING PESSOA.ID INTO person_id;
+    # O dicionário base já possui os dados comuns
+    parametros = {
+        'cpf_bind': cpf,
+        'nome_bind': name,
+        'uf_bind': uf,
+        'cidade_bind': cidade,
+        'bairro_bind': bairro,
+        'rua_bind': rua,
+        'numero_bind': nro,
+        'telefone1_bind': telefone1,
+        'telefone2_bind': telefone2,
+        'data_nasc_bind': dtNasc,
+        'senha_bind': senha
+    }
 
-            COMMIT;
-        EXCEPTION
-            WHEN OTHERS THEN
-                ROLLBACK;
-                RAISE;
-        END;'''
 
-    if(coren!=None and crm==None):
-        '''DECLARE
-            person_id NUMBER;
-        BEGIN
-            INSERT INTO PESSOA(CPF, NOME, UF,CIDADE,BAIRRO,RUA,NUMERO,TELEFONE1,TELEFONE2,DATA_NASC,SENHA)
-            VALUES (cpf, nome, uf,cidade,bairro,rua,numero,telefone1,telefone2,data_nasc,senha)
-            RETURNING PESSOA.ID INTO person_id;
-
-            INSERT INTO ENFERMEIRO(ID, COREN)
-            VALUES (person_id, coren);
-
-            INSERT INTO MEDICO(ID, crm)
-            VALUES (person_id,crm);
-
-            COMMIT;
-        EXCEPTION
-            WHEN OTHERS THEN
-                ROLLBACK;
-                RAISE;
-        END;'''
+    if coren is None and crm is None:
+        sql_query = """
+            BEGIN
+                INSERT INTO PESSOA(CPF, NOME, UF, CIDADE, BAIRRO, RUA, NUMERO, TELEFONE1, TELEFONE2, DATA_NASC, SENHA)
+                VALUES (:cpf_bind, :nome_bind, :uf_bind, :cidade_bind, :bairro_bind, :rua_bind, :numero_bind, :telefone1_bind, :telefone2_bind, TO_DATE(:data_nasc_bind, 'YYYY-MM-DD'), :senha_bind);
+                COMMIT;
+            EXCEPTION
+                WHEN OTHERS THEN
+                    ROLLBACK;
+                    RAISE;
+            END;
+        """
         
-    if(coren==None and crm!=None):
-        '''DECLARE
-            person_id NUMBER;
-        BEGIN
-            INSERT INTO PESSOA(CPF, NOME, UF,CIDADE,BAIRRO,RUA,NUMERO,TELEFONE1,TELEFONE2,DATA_NASC,SENHA)
-            VALUES (cpf, nome, uf,cidade,bairro,rua,numero,telefone1,telefone2,data_nasc,senha)
-            RETURNING PESSOA.ID INTO person_id;
+    elif coren is not None and crm is None:
+        parametros['coren_bind'] = coren
+        
+        sql_query = """
+            BEGIN
+                INSERT INTO PESSOA(CPF, NOME, UF, CIDADE, BAIRRO, RUA, NUMERO, TELEFONE1, TELEFONE2, DATA_NASC, SENHA)
+                VALUES (:cpf_bind, :nome_bind, :uf_bind, :cidade_bind, :bairro_bind, :rua_bind, :numero_bind, :telefone1_bind, :telefone2_bind, TO_DATE(:data_nasc_bind, 'YYYY-MM-DD'), :senha_bind)
+                RETURNING ID INTO :person_id_out; -- Use um bind de saída se quiser o ID de volta no Python
 
-            INSERT INTO ENFERMEIRO(ID, COREN)
-            VALUES (person_id, coren);
+                INSERT INTO ENFERMEIRO(ID, COREN)
+                VALUES (:person_id_out, :coren_bind);
 
-            COMMIT;
-        EXCEPTION
-            WHEN OTHERS THEN
-                ROLLBACK;
-        END;'''
+                COMMIT;
+            EXCEPTION
+                WHEN OTHERS THEN
+                    ROLLBACK;
+                    RAISE;
+            END;
+        """
+            
+    elif coren is None and crm is not None:
+        parametros['crm_bind'] = crm
 
-    if(coren!=None and crm!=None):
-        '''DECLARE
-            person_id NUMBER;
-        BEGIN
-            INSERT INTO PESSOA(CPF, NOME, UF,CIDADE,BAIRRO,RUA,NUMERO,TELEFONE1,TELEFONE2,DATA_NASC,SENHA)
-            VALUES (cpf, nome, uf,cidade,bairro,rua,numero,telefone1,telefone2,data_nasc,senha)
-            RETURNING PESSOA.ID INTO person_id;
+        sql_query = """
+            BEGIN
+                INSERT INTO PESSOA(CPF, NOME, UF, CIDADE, BAIRRO, RUA, NUMERO, TELEFONE1, TELEFONE2, DATA_NASC, SENHA)
+                VALUES (:cpf_bind, :nome_bind, :uf_bind, :cidade_bind, :bairro_bind, :rua_bind, :numero_bind, :telefone1_bind, :telefone2_bind, TO_DATE(:data_nasc_bind, 'YYYY-MM-DD'), :senha_bind)
+                RETURNING ID INTO :person_id_out;
 
-            INSERT INTO ENFERMEIRO(ID, COREN)
-            VALUES (person_id, coren);
+                INSERT INTO MEDICO(ID, CRM)
+                VALUES (:person_id_out, :crm_bind);
 
-            INSERT INTO MEDICO(ID, CRM)
-            VALUES (person_id,crm);
+                COMMIT;
+            EXCEPTION
+                WHEN OTHERS THEN
+                    ROLLBACK;
+                    RAISE;
+            END;
+        """
 
-            COMMIT;
-        EXCEPTION
-            WHEN OTHERS THEN
-                ROLLBACK;
-                RAISE;
-        END;'''
+    elif coren is not None and crm is not None:
+        parametros['coren_bind'] = coren
+        parametros['crm_bind'] = crm
+        
+        sql_query = """
+            BEGIN
+                INSERT INTO PESSOA(CPF, NOME, UF, CIDADE, BAIRRO, RUA, NUMERO, TELEFONE1, TELEFONE2, DATA_NASC, SENHA)
+                VALUES (:cpf_bind, :nome_bind, :uf_bind, :cidade_bind, :bairro_bind, :rua_bind, :numero_bind, :telefone1_bind, :telefone2_bind, TO_DATE(:data_nasc_bind, 'YYYY-MM-DD'), :senha_bind)
+                RETURNING ID INTO :person_id_out;
 
-    if(result):
+                INSERT INTO ENFERMEIRO(ID, COREN)
+                VALUES (:person_id_out, :coren_bind);
+
+                INSERT INTO MEDICO(ID, CRM)
+                VALUES (:person_id_out, :crm_bind);
+
+                COMMIT;
+            EXCEPTION
+                WHEN OTHERS THEN
+                    ROLLBACK;
+                    RAISE;
+            END;
+        """
+
+    try:
+        cursor.execute(sql_query, parametros)
+        connection.commit()
         print("Cadastro realizado - logando...")
         sc.Esperar(1)
         sc.Logar()
-    else:
+        
+    except oracledb.Error as error:
+        connection.rollback() # Garante o rollback se o bloco PL/SQL não o fez
         opt = input("Parece que algo deu errado... Tentar novamente? [s/n]: ")
         if (opt == "s"): 
             sc.Cadastrar()
         else: 
             sc.Sair()
+
 
 
 def Logar():
@@ -128,14 +153,24 @@ def Logar():
     cpf = input("CPF: ")
     senha = input("Senha: ")
 
-    # senhaBanco = query(WHERE CPF == cpf)
-    ''' senhaBanco = SELECT PESSOA.SENHA FROM PESSOA WHERE PESSOA.CPF=cpf;'''
+    try:
+        sql_query = "SELECT SENHA FROM PESSOA WHERE CPF = :cpf_bind"
+        
+        cursor.execute(sql_query, [cpf])
 
-    if (senha == tc.Senha()):
-        print("Credenciais aceitas!")
-        sc.Esperar(0.5)
-        sc.Menu()
-    else:
+        resultado = cursor.fetchone()
+
+        if resultado:
+            if(senha == resultado[0]):
+                print("Credenciais aceitas!")
+                sc.Esperar(0.5)
+                sc.Menu()
+        else:
+            print("Parece que algo não está certo, tente novamente...")
+            sc.Esperar(1.5)
+            sc.Iniciar()
+
+    except oracledb.Error as error:
         print("Parece que algo não está certo, tente novamente...")
         sc.Esperar(1.5)
         sc.Iniciar()
