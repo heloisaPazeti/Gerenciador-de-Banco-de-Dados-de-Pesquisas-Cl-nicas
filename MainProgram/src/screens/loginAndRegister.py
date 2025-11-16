@@ -18,8 +18,13 @@ def Cadastrar():
     telefone1 = input("Telefone Principal: ")
     telefone2 = input("Telefone Secundario (opcional): ")
     dtNasc = input("Data de Nascimento (dd/mm/yyyy): ")
-    coren = input("COREN (opcional): ")
-    crm = input("CRM (opcional): ")
+    coren = input("COREN (opcional, digite 'nulo' para deixar vazio): ")
+    crm = input("CRM (opcional, digite 'nulo' para deixar vazio): ")
+
+    if(crm=='nulo'):
+        crm=None
+    if(coren=='nulo'):
+        coren=None
 
     senha = input("Senha: ")
     senha2 = input("Insira a senha novamente: ")
@@ -28,30 +33,93 @@ def Cadastrar():
         print("Parece que algo não deu certo...")
         senha2 = input("Insira a senha novamente: ")
 
-    #TODO#
-    #id=random number???
 
+    if(coren==None and crm==None):
     # result = query de inserção
-    # result = 'INSERT INTO PESSOA(ID, CPF, NOME, UF,CIDADE,BAIRRO,RUA,NUMERO,TELEFONE1,TELEFONE2,DATA_NASC,SENHA) VALUES (id, cpf, nome, uf,cidade,bairro,rua,numero,telefone1,telefone2,data_nasc,senha);'
+        '''DECLARE
+            person_id NUMBER;
+        BEGIN
+            INSERT INTO PESSOA(CPF, NOME, UF,CIDADE,BAIRRO,RUA,NUMERO,TELEFONE1,TELEFONE2,DATA_NASC,SENHA)
+            VALUES (cpf, nome, uf,cidade,bairro,rua,numero,telefone1,telefone2,data_nasc,senha)
+            RETURNING PESSOA.ID INTO person_id;
 
-    #if(coren!=None):
-    #    result = 'INSERT INTO ENFERMEIRO(id,COREN) VALUES(id,coren);'
+            COMMIT;
+        EXCEPTION
+            WHEN OTHERS THEN
+                ROLLBACK;
+                RAISE;
+        END;'''
 
-    #if(crm!=None):
-    #    result = 'INSERT INTO MEDICO(ID,CRM) VALUES(id,crm);'
+    if(coren!=None and crm==None):
+        '''DECLARE
+            person_id NUMBER;
+        BEGIN
+            INSERT INTO PESSOA(CPF, NOME, UF,CIDADE,BAIRRO,RUA,NUMERO,TELEFONE1,TELEFONE2,DATA_NASC,SENHA)
+            VALUES (cpf, nome, uf,cidade,bairro,rua,numero,telefone1,telefone2,data_nasc,senha)
+            RETURNING PESSOA.ID INTO person_id;
+
+            INSERT INTO ENFERMEIRO(ID, COREN)
+            VALUES (person_id, coren);
+
+            INSERT INTO MEDICO(ID, crm)
+            VALUES (person_id,crm);
+
+            COMMIT;
+        EXCEPTION
+            WHEN OTHERS THEN
+                ROLLBACK;
+                RAISE;
+        END;'''
+        
+    if(coren==None and crm!=None):
+        '''DECLARE
+            person_id NUMBER;
+        BEGIN
+            INSERT INTO PESSOA(CPF, NOME, UF,CIDADE,BAIRRO,RUA,NUMERO,TELEFONE1,TELEFONE2,DATA_NASC,SENHA)
+            VALUES (cpf, nome, uf,cidade,bairro,rua,numero,telefone1,telefone2,data_nasc,senha)
+            RETURNING PESSOA.ID INTO person_id;
+
+            INSERT INTO ENFERMEIRO(ID, COREN)
+            VALUES (person_id, coren);
+
+            COMMIT;
+        EXCEPTION
+            WHEN OTHERS THEN
+                ROLLBACK;
+        END;'''
+
+    if(coren!=None and crm!=None):
+        '''DECLARE
+            person_id NUMBER;
+        BEGIN
+            INSERT INTO PESSOA(CPF, NOME, UF,CIDADE,BAIRRO,RUA,NUMERO,TELEFONE1,TELEFONE2,DATA_NASC,SENHA)
+            VALUES (cpf, nome, uf,cidade,bairro,rua,numero,telefone1,telefone2,data_nasc,senha)
+            RETURNING PESSOA.ID INTO person_id;
+
+            INSERT INTO ENFERMEIRO(ID, COREN)
+            VALUES (person_id, coren);
+
+            INSERT INTO MEDICO(ID, CRM)
+            VALUES (person_id,crm);
+
+            COMMIT;
+        EXCEPTION
+            WHEN OTHERS THEN
+                ROLLBACK;
+                RAISE;
+        END;'''
 
     if(result):
-        #result = 'COMMIT;'
         print("Cadastro realizado - logando...")
         sc.Esperar(1)
         sc.Logar()
     else:
-        #result = 'ROLLBACK;'
         opt = input("Parece que algo deu errado... Tentar novamente? [s/n]: ")
         if (opt == "s"): 
             sc.Cadastrar()
         else: 
             sc.Sair()
+
 
 def Logar():
 
@@ -61,7 +129,7 @@ def Logar():
     senha = input("Senha: ")
 
     # senhaBanco = query(WHERE CPF == cpf)
-    # senhaBanco = SELECT PESSOA.SENHA FROM PESSOA WHERE PESSOA.CPF='1234567890';
+    ''' senhaBanco = SELECT PESSOA.SENHA FROM PESSOA WHERE PESSOA.CPF=cpf;'''
 
     if (senha == tc.Senha()):
         print("Credenciais aceitas!")
