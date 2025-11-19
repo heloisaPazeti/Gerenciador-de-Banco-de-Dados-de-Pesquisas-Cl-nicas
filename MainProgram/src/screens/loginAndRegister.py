@@ -46,8 +46,6 @@ def Cadastrar():
 
     connection = con.GetConnection() 
     cursor = connection.cursor()
-    #person_id_out = cursor.var(int)
-    #parametros["person_id_out"] = person_id_out
 
     try:
         sql = """
@@ -104,25 +102,26 @@ def Logar():
 
     sc.Header(1)
 
-    cpf = input("CPF: ").strip()
+    id = input("ID: ").strip()
     senha = input("Senha: ").strip()
-
+   
     try:
+
+        connection = con.GetConnection() 
         cursor = connection.cursor()
 
         sql_query = """
             SELECT SENHA 
             FROM PESSOA 
-            WHERE CPF = :cpf_bind
+            WHERE ID = %(id)s;
         """
 
-        cursor.execute(sql_query, {"cpf_bind": cpf})
+        cursor.execute(sql_query, {"id": id})
         resultado = cursor.fetchone()
-
         cursor.close()
 
         if not resultado:
-            print("CPF não encontrado. Tente novamente...")
+            print("ID não encontrado. Tente novamente...")
             sc.Esperar(1.5)
             return sc.Iniciar()
 
@@ -139,7 +138,9 @@ def Logar():
             sc.Esperar(1.5)
             return sc.Iniciar()
 
-    except oracledb.Error as error:
+    except psycopg2.Error as error:
+
         print("Erro no login, tente novamente...")
+        print("Detalhes técnicos:", error)
         sc.Esperar(1.5)
         return sc.Iniciar()
