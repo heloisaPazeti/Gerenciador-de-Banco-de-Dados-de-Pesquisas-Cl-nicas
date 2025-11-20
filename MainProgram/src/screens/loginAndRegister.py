@@ -20,18 +20,24 @@ def Cadastrar():
     result = True
     sc.Header(2)
 
-    cpf = input("CPF: ").strip()
+    cpf = input("CPF (coloque no formato xxx.xxx.xxx-xx): ").strip()
     name = input("Nome: ")
     uf = input("UF: ").strip()
     cidade = input("Cidade: ")
     bairro = input("Bairro: ")
     rua = input("Rua: ")
     nro = input("Numero: ")
-    telefone1 = input("Telefone Principal: ")
+    telefone1 = input("Telefone Principal (apenas numeros): ")
     telefone2 = input("Telefone Secundario (opcional): ") or None
     dtNasc = input("Data de Nascimento (dd/mm/yyyy): ").strip()
     coren = input("COREN (opcional): ") or None
     crm = input("CRM (opcional): ") or None
+
+    print("Quais papéis você terá no sistema?")
+    pesquisadorR = input("Pesquisador Responsavel [s/n]: ")
+    if pesquisadorR == "n":
+        pesquisadorC = input("Pesquisador Comum [s/n]: ")
+    paciente = input("Paciente [s/n]: ")
 
     senha = input("Senha: ")
     senha2 = input("Insira a senha novamente: ")
@@ -67,7 +73,7 @@ def Cadastrar():
         """ 
         cursor.execute(sql, parametros)
         person_id = cursor.fetchone()[0]
-        connection.commit()
+        #connection.commit()
         
         print("Cadastro de Pessoa realizado com sucesso!")
 
@@ -77,21 +83,87 @@ def Cadastrar():
             cursor.execute("""
                 INSERT INTO ENFERMEIRO (ID, COREN)
                 VALUES (%s, %s)
-            """, (person_id, coren))
-            connection.commit()
-            print("Cadastro de Enfermeiro feito com sucesso!")
+            """, [person_id, coren])
 
+            cursor.execute("""
+                INSERT INTO FUNCOES (ID, FUNCAO)
+                VALUES (%s, %s)
+            """, [person_id, 'ENFERMEIRO'])
+
+            #connection.commit()
+            print("Cadastro de Enfermeiro feito com sucesso!")
 
         if crm:
         
             cursor.execute("""
                 INSERT INTO MEDICO (ID, CRM)
                 VALUES (%s, %s)
-            """, (person_id, crm))
-            connection.commit()
+            """, [person_id, crm])
+
+            cursor.execute("""
+                INSERT INTO FUNCOES (ID, FUNCAO)
+                VALUES (%s, %s)
+            """, [person_id, 'MEDICO'])
+
+            #connection.commit()
             print("Cadastro de Medico feito com sucesso!")
 
+        if pesquisadorR == "s":
 
+            cursor.execute("""
+                INSERT INTO FUNCOES (ID, FUNCAO)
+                VALUES (%s, %s)
+            """, [person_id, 'PESQUISADOR'])
+
+            cursor.execute("""
+                INSERT INTO PESQUISADOR (ID, FUNCAO)
+                VALUES (%s, %s)
+            """, [person_id, 'PESQUISADOR_RESPONSAVEL'])
+
+            cursor.execute("""
+                INSERT INTO PESQUISADOR_RESPONSAVEL (ID)
+                VALUES (%s)
+            """, [person_id])
+
+            #connection.commit()
+            print("Cadastro de Pesquisador Comum feito com sucessor!")
+
+        if pesquisadorC == "s":
+
+            cursor.execute("""
+                INSERT INTO FUNCOES (ID, FUNCAO)
+                VALUES (%s, %s)
+            """, [person_id, 'PESQUISADOR'])
+            
+
+
+            cursor.execute("""
+                INSERT INTO PESQUISADOR (ID, FUNCAO)
+                VALUES (%s, %s)
+            """, [person_id, 'PESQUISADOR_COMUM'])
+
+            cursor.execute("""
+                INSERT INTO PESQUISADOR_COMUM (ID)
+                VALUES (%s)
+            """, [person_id])
+
+            #connection.commit()
+            print("Cadastro de Pesquisador Comum feito com sucessor!")
+
+        if paciente == "s":
+
+            cursor.execute("""
+                INSERT INTO FUNCOES (ID, FUNCAO)
+                VALUES (%s, %s)
+            """, {person_id, 'PACIENTE'})
+
+            cursor.execute("""
+                INSERT INTO PACIENTE (ID)
+                VALUES (%s)
+            """, {person_id})
+
+
+        connection.commit()
         cursor.close()
         sc.Esperar(1)
         sc.Logar()
