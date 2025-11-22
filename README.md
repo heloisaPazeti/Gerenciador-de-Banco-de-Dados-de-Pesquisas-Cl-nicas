@@ -24,6 +24,7 @@ Relatório de todo o desenvolvimento do sistema. Dentro poderá ser encontrado:
 ### Main Program
 
 Programa utilizável com as seguintes pastas:
+```
 ./
 ├── MainProgram/
 │   ├── __init__.py
@@ -55,7 +56,7 @@ Programa utilizável com as seguintes pastas:
 │           └── start.py
 ├── TrabalhoBD.pdf
 └── README.md
-
+```
 ## Rodando o Programa
 
 ### Windows
