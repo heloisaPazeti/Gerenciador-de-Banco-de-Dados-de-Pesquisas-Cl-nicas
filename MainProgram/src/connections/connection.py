@@ -1,3 +1,5 @@
+from dotenv import load_dotenv
+import os
 import psycopg2
 
 # ----------------------------------------------------------
@@ -7,16 +9,15 @@ import psycopg2
 # - Cria cursor
 # - Retorna ambos
 # ----------------------------------------------------------
+
+load_dotenv()
+
 def GetConnectionAndCursor():
-
     conn = psycopg2.connect(
-        host="localhost",
-        port=5432,
-        database="trabalhobd",
-        user="grupoquatro",
-        password="4444"
+        host=os.getenv("DB_HOST"),
+        port=os.getenv("DB_PORT"),
+        database=os.getenv("DB_NAME"),
+        user=os.getenv("DB_USER"),
+        password=os.getenv("DB_PASSWORD")
     )
-
-    cursor = conn.cursor()
-
-    return conn, cursor
+    return conn, conn.cursor()
