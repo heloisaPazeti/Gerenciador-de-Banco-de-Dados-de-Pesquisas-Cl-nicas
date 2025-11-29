@@ -32,8 +32,9 @@ class Pesquisa:
         if self.agFomento != None:
             print(f"Agência de Fomento: {self.agFomento}")
             print(f"Valor: {self.valor}")
-        print(f"Data de Entrada: {self.dtEntrada}")
-        print(f"Data de Saida: {self.dtSaida}")
+        if self.dtEntrada != None:
+            print(f"Data de Entrada: {self.dtEntrada}")
+            print(f"Data de Saida: {self.dtSaida}")
         print(f"Descricao: {self.descricao}")
         
         print("--------------------------------------------------")

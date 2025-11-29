@@ -25,8 +25,7 @@ def Header(header):
     elif(header == 4):
         print("|      Minhas Pesquisas       |")
     elif(header == 5):
-        print("|           Buscar            |")
+        print("|       Buscar Por Area       |")
     elif(header == 6):
         print("|   Adicionar Nova Pesquisa   |")
-
     print("-------------------------------")

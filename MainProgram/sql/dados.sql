@@ -181,23 +181,22 @@ INSERT INTO solicita_dados (id_hosp, id_pesq, situacao, descricao) VALUES
 (2, 22, 'APROVADO',  'Solicitação de exames para pesquisa sobre Zika'),
 (3, 23, 'REPROVADO',  'Pedido de dados demográficos - falta documentação');
 
------------------------------------------------------------------------
+----------------------------------------------------------------------
 -- INSERTS NA TABELA PESQUISA
 -----------------------------------------------------------------------
 INSERT INTO pesquisa (data_criacao, titulo, area, descricao) VALUES
-('2024-03-01', 'Estudo Biomarcadores COVID', 'Infectologia', 'Avaliar biomarcadores associados à gravidade da COVID-19'),
-('2024-06-15', 'Projeto Hipertensão Comunitária', 'Cardiologia', 'Intervenção comunitária para controle pressórico');
+('2024-03-01', 'ESTUDO BIOMARCADORES COVID', 'INFECTOLOGIA', 'AVALIAR BIOMARCADORES ASSOCIADOS À GRAVIDADE DA COVID-19'),
+('2024-06-15', 'PROJETO HIPERTENSÃO COMUNITÁRIA', 'CARDIOLOGIA', 'INTERVENÇÃO COMUNITÁRIA PARA CONTROLE PRESSÓRICO');
 
 -----------------------------------------------------------------------
 -- INSERTS NA TABELA EXECUCAO
 -----------------------------------------------------------------------
 INSERT INTO execucao (data_criacao, titulo, area, cnpj, data_inicio, data_conclusao) VALUES
-('2024-03-01', 'Estudo Biomarcadores COVID', 'Infectologia', '12345678/0001-90', '2024-04-01', '2024-12-31'),
-('2024-06-15', 'Projeto Hipertensão Comunitária', 'Cardiologia', '23456789/0001-01', '2024-07-01', '2025-06-30');
+('2024-03-01', 'ESTUDO BIOMARCADORES COVID', 'INFECTOLOGIA', '12345678/0001-90', '2024-04-01', '2024-12-31'),
+('2024-06-15', 'PROJETO HIPERTENSÃO COMUNITÁRIA', 'CARDIOLOGIA', '23456789/0001-01', '2024-07-01', '2025-06-30');
 
 -----------------------------------------------------------------------
 -- INSERTS NA TABELA PESQ_EXEC
------------------------------------------------------------------------
 INSERT INTO pesq_exec (id_pesq, id_exec, data_ingresso, data_saida) VALUES
 (24, 1, '2024-04-01', NULL),
 (25, 1, '2024-05-01', '2024-10-01'),
@@ -208,8 +207,8 @@ INSERT INTO pesq_exec (id_pesq, id_exec, data_ingresso, data_saida) VALUES
 -- INSERTS NA TABELA FINANCIA
 -----------------------------------------------------------------------
 INSERT INTO financia (cnpj, data_criacao, titulo, area, valor) VALUES
-('33333333/0001-03', '2024-03-01', 'Estudo Biomarcadores COVID', 'Infectologia', 150000.00),
-('11111111/0001-01', '2024-06-15', 'Projeto Hipertensão Comunitária', 'Cardiologia',  80000.00);
+('33333333/0001-03', '2024-03-01', 'ESTUDO BIOMARCADORES COVID', 'INFECTOLOGIA', 150000.00),
+('11111111/0001-01', '2024-06-15', 'PROJETO HIPERTENSÃO COMUNITÁRIA', 'CARDIOLOGIA',  80000.00);
 
 -----------------------------------------------------------------------
 -- INSERTS NA TABELA MED_EXEC
@@ -220,60 +219,44 @@ INSERT INTO med_exec (id_med, id_exec) VALUES
 (12, 2),
 (13, 2);
 
------------------------------------------------------------------------
 -- INSERTS NA TABELA TIPO DE COLETA
------------------------------------------------------------------------
 INSERT INTO tipo_coleta (categoria, periculosidade) VALUES
 ('Sangue', 'ALTA'),
 ('Saliva', 'BAIXA');
 
------------------------------------------------------------------------
 -- INSERTS NA  TABELA AMOSTRA
------------------------------------------------------------------------
 INSERT INTO amostra (categoria, data_coleta, id_pac, validade, info, estado, qtde, id_enf) VALUES
 ('Sangue', '2024-05-10', 15, '2024-05-20', 'Amostra rotulada A', 'CONSERVADO', 1, 1),
 ('Sangue', '2024-06-01', 16, '2024-06-11', 'Amostra rotulada B', 'CONSERVADO', 2, 1),
 ('Saliva','2024-07-12', 17, '2024-07-22', 'Amostra rotulada C', 'ALTERADO', 1, 1);
 
------------------------------------------------------------------------
 -- INSERTS NA TABELA DADOS_AMOSTRAS
------------------------------------------------------------------------
 INSERT INTO dados_amostra (id_estab, data_proc, id_amostra, dados) VALUES
 (1, '2024-05-11', 1, 'Resultado preliminar A'),
 (2, '2024-06-02', 2, 'Resultado preliminar B');
 
------------------------------------------------------------------------
 -- INSERTS NA TABELA DISPONIBILIZACAO
------------------------------------------------------------------------
 INSERT INTO disponibilizacao (id_exec, id_dados, data_entrega, data_devol) VALUES
 (1, 1, '2024-05-12', '2024-06-12'),
 (1, 2, '2024-06-05', '2024-07-05');
 
------------------------------------------------------------------------
 -- INSERTS NA TABELA TIPO_EXAME
------------------------------------------------------------------------
 INSERT INTO tipo_exame (categoria, periculosidade) VALUES
 ('Hemograma', 'BAIXA'),
 ('PCR','ALTA');
 
------------------------------------------------------------------------
 -- INSERTS NA TABELA EXAME
------------------------------------------------------------------------
 INSERT INTO exame (categoria, data_proc, id_pac, resultado, id_med) VALUES
 ('Hemograma', '2024-05-11', 15, 'Normal', 8),
 ('PCR',      '2024-05-11', 15, 'Negativo', 9);
 
------------------------------------------------------------------------
 -- INSERTS NA TABELA EXEC_DISP_EXAME
------------------------------------------------------------------------
 INSERT INTO exec_disp_exame (id_exame, id_exec, data_entrega, data_devol) VALUES
 (1, 1, '2024-05-12', '2024-06-12'),
 (2, 1, '2024-05-13', '2024-06-13');
 
------------------------------------------------------------------------
--- INSERTS NA TABELA EXEC_DISP_AMOSTRA
------------------------------------------------------------------------
 INSERT INTO exec_disp_amostra (id_amostra, id_exec, data_entrega, data_devol) VALUES
 (1, 1, '2024-05-12', '2024-06-12'),
 (2, 1, '2024-06-12', '2024-07-12');
+
 

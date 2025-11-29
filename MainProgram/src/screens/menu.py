@@ -14,7 +14,7 @@ def Menu(idPerson):
     sc.Header(3)
 
     print("[1] Minhas Pesquisas")
-    print("[2] Buscar")
+    print("[2] Buscar Pesquisas Por Área")
     print("[3] Adicionar Pesquisa")
     print("[4] Requisitar Exame / Amostra")
     print("[5] Deslogar")
@@ -27,9 +27,7 @@ def Menu(idPerson):
         if (result == False):
             sc.Menu(idPerson)
     elif(opt == "2"):
-        print("Esta opção ainda está em desenvolvimento...")
-        sc.Esperar(1.5)
-        sc.Menu(idPerson)
+        sc.BuscarPorArea(idPerson)
     elif(opt == "3"):
         sc.AdicionarPesquisa(idPerson)
     elif(opt == "4"):

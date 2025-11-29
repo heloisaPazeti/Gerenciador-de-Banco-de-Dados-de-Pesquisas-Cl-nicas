@@ -69,6 +69,67 @@ def MinhasPesquisas(idPerson):
         sc.Menu(idPerson)
    
 # -----------------------------------------------------
+# TELA PARA BUSCAR POR AREA
+# -----------------------------------------------------
+# - Pega a entrada do usuario da area
+# - Faz um select das informações relevantes
+# - Monta uma lista de pesquisas com os resultados
+    # - Lista todas as pesquisas
+# -----------------------------------------------------
+def BuscarPorArea(idPerson):
+
+    sc.Header(5)
+    area = input("Area: ").upper()
+
+    try:
+        connection, cursor = con.GetConnectionAndCursor()
+        cursor.execute("""
+            SELECT E.TITULO, E.AREA, E.DATA_CRIACAO, P.descricao, U.NOME AS Universidade, A.NOME AS AgenciaFomento, F.VALOR AS ValorFinanciado
+FROM EXECUCAO E
+JOIN Universidade u 
+                ON e.CNPJ = u.CNPJ
+            join pesquisa p 
+            	on E.titulo = P.titulo 
+            	and E.area  = P.area 
+            	and E.data_criacao = P.data_criacao 
+            left JOIN Financia f 
+                on E.titulo  	  = f.Titulo
+                AND E.AREA 		  = f.Area
+                AND E.data_criacao = f.data_criacao 
+            left JOIN Ag_Fomento a
+                ON f.CNPJ = a.CNPJ
+            WHERE E.AREA = %s;
+        """, [area])
+
+        result = cursor.fetchall()
+        cursor.close()
+
+        pesquisas = [
+            res.Pesquisa(
+                idPesq = idPerson,
+                titulo=row[0],
+                area=row[1],
+                dtCriacao=row[2],
+                descricao=row[3],
+                universidade=row[4],
+                agFomento=row[5],
+                valor=row[6],
+                dtEntrada=None,
+                dtSaida=None
+            )
+
+            for row in result
+        ]
+
+        sc.ListarPesquisas(pesquisas, idPerson)
+
+    except psycopg2.Error as error:
+        connection.rollback()
+        print("Erro:", error)
+        input("Parece que algo deu errado... Pressione qualquer tecla para sair... ")
+        sc.Menu(idPerson)
+   
+# -----------------------------------------------------
 # TELA PARA ADICIONAR PESQUISA 
 # -----------------------------------------------------
 # - Recolhe todos os dados de uma pesquisa
@@ -85,10 +146,10 @@ def AdicionarPesquisa(idPerson):
         
         connection, cursor = con.GetConnectionAndCursor() 
 
-        titulo = input("Titulo: ")
-        area = input("Área: ")
+        titulo = input("Titulo: ").upper()
+        area = input("Área: ").upper()
         dtCriacao = input("Data de Criação (dd/mm/yyyy): ").strip()
-        desc = input("Descrição: ")
+        desc = input("Descrição: ").upper()
 
         cursor.execute("""
             INSERT INTO PESQUISA (DATA_CRIACAO, TITULO, AREA, DESCRICAO)

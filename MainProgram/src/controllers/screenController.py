@@ -27,6 +27,9 @@ def Menu(idPerson):
 def MinhasPesquisas(idPerson):
     mo.MinhasPesquisas(idPerson)
 
+def BuscarPorArea(idPerson):
+    mo.BuscarPorArea(idPerson)
+
 def AdicionarPesquisa(idPerson):
     Header(6)
     mo.AdicionarPesquisa(idPerson)
