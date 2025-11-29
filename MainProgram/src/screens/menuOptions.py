@@ -97,7 +97,13 @@ def AdicionarPesquisa(idPerson):
 
         print("-------------------------------")
 
-        universidade = input("CNPJ da Universidade: ")
+        universidade = input("CNPJ da Universidade: ") or None
+
+        if(universidade == None):
+            print("ERRO: você não pode deixar o campo universidade vazio...")
+            input("Pressione qualquer tecla para voltar")
+            sc.Menu(idPerson)
+
         dtInicio = input("Data de Inicio da Execução (dd/mm/yyyy): ")
         dtConclusao = input("Data de Conclusão da Execução (dd/mm/yyyy): ")
 
@@ -145,7 +151,6 @@ def AdicionarPesquisa(idPerson):
     except psycopg2.Error as error:
         connection.rollback()
         print("Erro:", error)
-
         input("Parece que algo deu errado... Pressione qualquer tecla para sair... ")
         sc.Menu(idPerson)
    

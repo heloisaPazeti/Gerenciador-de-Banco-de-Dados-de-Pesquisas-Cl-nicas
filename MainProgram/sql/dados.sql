@@ -34,7 +34,7 @@ INSERT INTO pessoa (cpf, nome, uf, cidade, bairro, rua, numero, telefone1, telef
 -- INSERTS NA TABELA FUNCOES
 -----------------------------------------------------------------------
 INSERT INTO funcoes (id, funcao) VALUES
-(1, 'ENERMEIRO'), (4, 'ENERMEIRO'), (5, 'ENERMEIRO'), (6, 'ENERMEIRO'), (7, 'ENERMEIRO'),
+(1, 'ENFERMEIRO'), (4, 'ENFERMEIRO'), (5, 'ENFERMEIRO'), (6, 'ENFERMEIRO'), (7, 'ENFERMEIRO'),
 (8, 'MEDICO'), (9, 'MEDICO'), (10, 'MEDICO'), (11, 'MEDICO'), (12, 'MEDICO'), (13, 'MEDICO'), (14, 'MEDICO'),
 (15, 'PACIENTE'), (16, 'PACIENTE'), (17, 'PACIENTE'), (18, 'PACIENTE'), (19, 'PACIENTE'), (20, 'PACIENTE'),
 (21, 'PESQUISADOR'), (22, 'PESQUISADOR'), (23, 'PESQUISADOR'), (24, 'PESQUISADOR'), (25, 'PESQUISADOR'), (26, 'PESQUISADOR'), (27, 'PESQUISADOR');

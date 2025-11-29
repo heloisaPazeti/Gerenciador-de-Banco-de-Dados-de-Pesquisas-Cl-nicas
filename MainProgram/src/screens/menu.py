@@ -23,7 +23,9 @@ def Menu(idPerson):
     opt = input("\nSelecione uma opção: ")
 
     if(opt == "1"):
-        sc.MinhasPesquisas(idPerson)
+        result = sc.MinhasPesquisas(idPerson)
+        if (result == False):
+            sc.Menu(idPerson)
     elif(opt == "2"):
         print("Esta opção ainda está em desenvolvimento...")
         sc.Esperar(1.5)

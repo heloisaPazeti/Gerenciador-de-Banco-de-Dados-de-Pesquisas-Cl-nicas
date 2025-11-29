@@ -39,6 +39,11 @@ def Cadastrar():
         pesquisadorC = input("Pesquisador Comum [s/n]: ")
     paciente = input("Paciente [s/n]: ")
 
+    if ((coren == None) and (crm == None) and (pesquisadorR == "n") and (pesquisadorC == "n") and (paciente == "n")):
+        print("Você precisa escolher um papel (medico, enfermeiro, pesquisador responsável, pesquisador comum ou paciente) para se cadastar...")
+        input("Pressione qualquer tecla para continuar...")
+        sc.Iniciar()
+
     senha = input("Senha: ")
     senha2 = input("Insira a senha novamente: ")
 
@@ -158,7 +163,8 @@ def Cadastrar():
 
         connection.commit()
         cursor.close()
-        sc.Esperar(1)
+        print(f"Seu ID é: ", {person_id}, ". Guarde bem.")
+        input("Pressione qualquer tecla para continuar...")
         sc.Logar()
 
     except psycopg2.Error as error:

@@ -40,7 +40,7 @@ create table FUNCOES (
 	
 	constraint PK_FUNCOES primary key (ID, FUNCAO),
 	constraint FK_FUNCOES foreign key (ID) references PESSOA (ID) on delete CASCADE,
-	constraint CHECK_FUNCAO check (FUNCAO in ('PESQUISADOR', 'ENERMEIRO', 'MEDICO', 'PACIENTE'))
+	constraint CHECK_FUNCAO check (FUNCAO in ('PESQUISADOR', 'ENFERMEIRO', 'MEDICO', 'PACIENTE'))
 );
 
 --------------------------------------------------------------------------
