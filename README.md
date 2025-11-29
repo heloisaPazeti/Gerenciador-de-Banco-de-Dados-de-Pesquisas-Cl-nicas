@@ -33,9 +33,9 @@ Programa utilizável com as seguintes pastas:
 │   │   ├── __init__.py
 │   │   └── research.py
 │   ├── sql/
-│   │   ├── create_tables.sql
-│   │   ├── inserts.sql
-│   │   └── selects.sql
+│   │   ├── esquemas.sql
+│   │   ├── dados.sql
+│   │   └── consultas.sql
 │   └── src/
 │       ├── __init__.py
 │       ├── connections/
