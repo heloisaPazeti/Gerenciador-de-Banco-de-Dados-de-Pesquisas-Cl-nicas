@@ -21,11 +21,11 @@ def Cadastrar():
     sc.Header(2)
 
     cpf = input("CPF (coloque no formato xxx.xxx.xxx-xx): ").strip()
-    name = input("Nome: ")
-    uf = input("UF: ").strip()
-    cidade = input("Cidade: ")
-    bairro = input("Bairro: ")
-    rua = input("Rua: ")
+    name = input("Nome: ").upper()
+    uf = input("UF: ").strip().upper()
+    cidade = input("Cidade: ").upper()
+    bairro = input("Bairro: ").upper()
+    rua = input("Rua: ").upper()
     nro = input("Numero: ")
     telefone1 = input("Telefone Principal (apenas numeros): ")
     telefone2 = input("Telefone Secundario (opcional): ") or None

@@ -1,0 +1,9 @@
+cffi==2.0.0
+DateTime==6.0
+dotenv==0.9.9
+psycopg2-binary==2.9.11
+pycparser==2.23
+python-dotenv==1.2.1
+pytz==2025.2
+typing_extensions==4.15.0
+zope.interface==8.1.1

@@ -1,6 +1,8 @@
 from MainProgram.src.controllers import screenController as sc
 from MainProgram.objects import research as res
 from MainProgram.src.connections import connection as con
+from MainProgram.src.functions import errors
+from datetime import datetime
 import psycopg2
 
 # -----------------------------------------------------
@@ -149,6 +151,7 @@ def AdicionarPesquisa(idPerson):
         titulo = input("Titulo: ").upper()
         area = input("Área: ").upper()
         dtCriacao = input("Data de Criação (dd/mm/yyyy): ").strip()
+        _dtCriacao = datetime.strptime(dtCriacao, "%d/%m/%Y")
         desc = input("Descrição: ").upper()
 
         cursor.execute("""
@@ -166,8 +169,11 @@ def AdicionarPesquisa(idPerson):
             sc.Menu(idPerson)
 
         dtInicio = input("Data de Inicio da Execução (dd/mm/yyyy): ")
-        dtConclusao = input("Data de Conclusão da Execução (dd/mm/yyyy): ")
 
+        if (datetime.strptime(dtCriacao, "%d/%m/%Y") > datetime.strptime(dtInicio, "%d/%m/%Y")):
+            raise errors.DateError("A data de inicio da execução não deve ser antes da data de criação da pesquisa...")
+
+        dtConclusao = input("Data de Conclusão da Execução (dd/mm/yyyy): ")
         cursor.execute("""
             INSERT INTO EXECUCAO (DATA_CRIACAO, TITULO, AREA, CNPJ, DATA_INICIO, DATA_CONCLUSAO) 
             VALUES (TO_DATE(%s, 'DD/MM/YYYY'), %s, %s, %s, TO_DATE(%s, 'DD/MM/YYYY'), TO_DATE(%s, 'DD/MM/YYYY'))
@@ -183,7 +189,16 @@ def AdicionarPesquisa(idPerson):
         while(qtdePesq != 0):
             idPesq = input("ID pesquisador: ")
             dtIngresso = input ("Data de Inicio do pesquisador (dd/mm/yyyy): ")
+
+            if (datetime.strptime(dtIngresso, "%d/%m/%Y") < datetime.strptime(dtInicio, "%d/%m/%Y")):
+                raise errors.DateError("A data de ingresso de um pesquisador deve ser depois da data de inicio da pesquisa...")
+
             dtSaida = input("Data de Conclusao do pesquisador (dd/mm/yyyy): ")
+
+
+            if (datetime.strptime(dtSaida, "%d/%m/%Y") > datetime.strptime(dtConclusao, "%d/%m/%Y")):
+                raise errors.DateError("A data de saida do pesquisador deve ser antes do que a data de conclusao da pesquisa...")
+
             cursor.execute("""
                 INSERT INTO PESQ_EXEC (ID_PESQ, ID_EXEC, DATA_INGRESSO, DATA_SAIDA)
                 VALUES (%s, %s, TO_DATE(%s, 'DD/MM/YYYY'), TO_DATE(%s, 'DD/MM/YYYY'));
@@ -213,6 +228,12 @@ def AdicionarPesquisa(idPerson):
         connection.rollback()
         print("Erro:", error)
         input("Parece que algo deu errado... Pressione qualquer tecla para sair... ")
+        sc.Menu(idPerson)
+
+    except errors.DateError as e:
+        connection.rollback()
+        print("Erro: ", e)
+        input("Pressione qualquer tecla para voltar... ")
         sc.Menu(idPerson)
    
 
