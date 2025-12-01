@@ -184,7 +184,7 @@ def AdicionarPesquisa(idPerson):
     
         print("-------------------------------")
 
-        qtdePesq = int(input("Quantos pesquisadores comuns irão participar: "))
+        qtdePesq = int(input("Quantos pesquisadores irão participar: "))
 
         while(qtdePesq != 0):
             idPesq = input("ID pesquisador: ")
