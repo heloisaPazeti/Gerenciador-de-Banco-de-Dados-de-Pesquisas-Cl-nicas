@@ -223,6 +223,9 @@ INSERT INTO pesquisa (data_criacao, titulo, area, descricao) VALUES
 ('2024-03-01', 'ESTUDO BIOMARCADORES COVID', 'INFECTOLOGIA', 'AVALIAR BIOMARCADORES ASSOCIADOS À GRAVIDADE DA COVID-19'),
 ('2024-06-15', 'PROJETO HIPERTENSÃO COMUNITÁRIA', 'CARDIOLOGIA', 'INTERVENÇÃO COMUNITÁRIA PARA CONTROLE PRESSÓRICO');
 
+
+INSERT INTO pesquisa (data_criacao, titulo, area, descricao) VALUES
+('2025-06-15', 'PROJETO MENTAL', 'NEUROLOGIA', 'NEUROCIENCIA É LEGAL');
 -----------------------------------------------------------------------
 -- INSERTS NA TABELA EXECUCAO
 -----------------------------------------------------------------------
@@ -396,6 +399,14 @@ INSERT INTO disponibilizacao (id_exec, id_dados, data_entrega, data_devol) VALUE
 (1, 35, '2024-06-05', '2024-07-05'),
 (1, 36, '2025-05-12', '2027-06-12');
 
+INSERT INTO disponibilizacao (id_exec, id_dados, data_entrega, data_devol) VALUES
+(2, 33, '2025-06-05', '2027-07-05'),
+(2, 34, '2024-05-12', '2024-06-12'),
+(2, 35, '2024-06-05', '2024-07-05'),
+(2, 36, '2025-05-12', '2027-06-12');
+
+
+
 
 -- INSERTS NA TABELA TIPO_EXAME
 INSERT INTO tipo_exame (categoria, periculosidade) VALUES
@@ -416,3 +427,4 @@ INSERT INTO exec_disp_amostra (id_amostra, id_exec, data_entrega, data_devol) VA
 (1, 1, '2024-05-12', '2024-06-12'),
 (2, 1, '2024-06-12', '2024-07-12');
 
+SELECT version()

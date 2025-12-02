@@ -1,27 +1,23 @@
--- 1. Exibir quantidade de dados de amostras que uma pesquisa ainda nao devolveu
+-- 1. Exibir quantidade de dados de amostras que uma pesquisa ainda nao devolveu e todos os dados da pesquissa
 SELECT
-    P.data_criacao,           -- Data de criação da pesquisa
-    P.titulo,                 -- Título da pesquisa
-    P.area,                   -- Área da pesquisa
+    E.data_criacao,           -- Data de criação da pesquisa
+    E.titulo,                 -- Título da pesquisa
+    E.area,                   -- Área da pesquisa
     COUNT(*) AS qtd_n_devolvida  -- Quantidade de dados ainda não devolvidos
-FROM PESQUISA P
-JOIN EXECUCAO E 
-      ON E.data_criacao = P.data_criacao  -- Junta a execução à pesquisa com base na data
-     AND E.titulo        = P.titulo      -- Junta pelo título da pesquisa
-     AND E.area          = P.area        -- Junta pela área da pesquisa
+FROM EXECUCAO E 
 JOIN DISPONIBILIZACAO D 
       ON D.id_exec = E.id               -- Relaciona cada execução à sua disponibilização de amostras
 WHERE (D.data_devol IS NULL OR CURRENT_DATE < D.data_devol)  -- Filtra apenas amostras ainda não devolvidas
 GROUP BY 
-    P.data_criacao, 
-    P.titulo,
-    P.area                                 
+    E.data_criacao, 
+    E.titulo,
+    E.area                                 
 ORDER BY qtd_n_devolvida DESC;             -- Ordena do maior número de não devolvidas
 
--- 2. Retornar as 5 pesquisas que mais utilizaram amostras
+-- 2. Retornar as 5 pesquisas que mais utilizaram dados de amostras
 SELECT 
     P.*,                     -- Seleciona todas as colunas da pesquisa
-    COUNT(A.id) AS total_amostras  -- Conta quantas amostras foram utilizadas em cada pesquisa
+    COUNT(D.id_dados) AS total_amostras  -- Conta quantos dados de amostras foram utilizadas em cada pesquisa
 FROM PESQUISA P
 JOIN EXECUCAO E 
       ON E.titulo        = P.titulo
@@ -29,10 +25,6 @@ JOIN EXECUCAO E
      AND E.data_criacao  = P.data_criacao
 JOIN DISPONIBILIZACAO D 
       ON D.id_exec = E.id
-JOIN DADOS_AMOSTRA DD 
-      ON DD.id = D.id_dados
-JOIN AMOSTRA A 
-      ON A.id = DD.id_amostra
 GROUP BY 
     P.data_criacao,
     P.titulo,
@@ -96,10 +88,8 @@ JOIN DADOS_AMOSTRA DA
       ON DA.id = D.id_dados
 JOIN AMOSTRA A 
       ON A.id = DA.id_amostra
-JOIN PACIENTE Pa 
-      ON Pa.id = A.id_pac               -- Junta amostras aos pacientes
 JOIN PESSOA Pe 
-      ON Pe.id = Pa.id                  -- Obtém dados do paciente (incluindo UF)
+      ON A.id_pac= Pe.id                -- Obtém dados do paciente (incluindo UF)
 JOIN estab_saude ES 
       ON ES.id = DA.id_estab            -- Junta com estabelecimento externo
 GROUP BY 
@@ -131,44 +121,3 @@ HAVING
         FROM AG_FOMENTO
     );
 
-------------------------------------
---        SELECT APLICAÇÃO		  --
-------------------------------------
-
--- Selecionar pesquisas:
-
-SELECT PE.data_ingresso, PE.data_saida, E.TITULO, E.AREA, E.DATA_CRIACAO, P.descricao, U.NOME AS Universidade, A.NOME AS AgenciaFomento, F.VALOR AS ValorFinanciado
-FROM Pesq_Exec PE 
-JOIN Execucao E
-    ON pe.ID_Exec = e.ID
-JOIN Universidade u 
-    ON e.CNPJ = u.CNPJ
-join pesquisa p 
-	on E.titulo = P.titulo 
-	and E.area  = P.area 
-	and E.data_criacao = P.data_criacao 
-left JOIN Financia f 
-    on E.titulo  	  = f.Titulo
-   AND E.AREA 		  = f.Area
-   AND E.data_criacao = f.data_criacao 
-left JOIN Ag_Fomento a
-    ON f.CNPJ = a.CNPJ
-WHERE pe.ID_Pesq = 24; --:ID_PESQ
-
--- Selecionar por Area:
-
-SELECT E.TITULO, E.AREA, E.DATA_CRIACAO, P.descricao, U.NOME AS Universidade, A.NOME AS AgenciaFomento, F.VALOR AS ValorFinanciado
-FROM EXECUCAO E
-JOIN Universidade u 
-    ON e.CNPJ = u.CNPJ
-join pesquisa p 
-	on E.titulo = P.titulo 
-	and E.area  = P.area 
-	and E.data_criacao = P.data_criacao 
-left JOIN Financia f 
-    on E.titulo  	  = f.Titulo
-   AND E.AREA 		  = f.Area
-   AND E.data_criacao = f.data_criacao 
-left JOIN Ag_Fomento a
-    ON f.CNPJ = a.CNPJ
-WHERE E.AREA = 'CARDIOLOGIA'; --:AREA
